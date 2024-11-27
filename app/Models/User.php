@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'admin',
     ];
 
     /**
@@ -45,4 +47,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Ajout de méthodes
+// Un utilisateur écrit plusieurs articles
+public function articles()
+{
+    return $this->hasMany(Article::class);
+}
+// Un utilisateur écrit plusieurs commentaires
+public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function profile()
+{
+    return $this->hasOne(Profile::class);
+}
 }
