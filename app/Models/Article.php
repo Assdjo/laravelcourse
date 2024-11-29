@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Likeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,16 +12,14 @@ class Article extends Model
     /** 
      * @use HasFactory<\Database\Factories\ArticleFactory>
      */
-    use HasFactory;
+    use HasFactory; use Likeable;
     protected $fillable = ['title', 'body', 'user_id', 'image'] ;
 
-    protected $appends = [
-        'author'
-    ];
+    // protected $appends = [
+    //     'author'
+    // ];
 
-    public function getAuthorAtribute() {
-        return $this->user->name;
-    }
+    
 
     // Un article n'a qu'un auteur
 public function user()
@@ -31,4 +30,16 @@ public function user()
 public function comments(){
     return $this->hasMany(Comment::class);
 }
+
+// Un article peut avoir plusieurs tags
+public function tags()
+{
+    return $this->belongsToMany(Tag::class);
+}
+
+public function tag($tag)
+{
+    return $this->tags()->attach($tag);
+}
+
 }

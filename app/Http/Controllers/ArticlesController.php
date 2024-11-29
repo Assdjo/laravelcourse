@@ -11,7 +11,8 @@ class ArticlesController extends Controller
 {
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::with('user', 'tags')->get();
+       
         return Inertia::render('layouts/Master', [
             'articles'=> $articles
         ]);
@@ -52,7 +53,12 @@ class ArticlesController extends Controller
 
     ]);
 
-    $art = Article::create($validateData);
+    Article::create([
+        'title' => $request->title,
+        'body' => $request->body,
+        'user_id' => $request->user_id,
+        'image' => $request->file('image')->store('img', 'public')
+    ]);
     return redirect('/articles')->with(['success_message' => 'L\'article a été crée !']);
 
     
