@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
-@section('title')
-Éditer l'article {{ $article->title }}
-@endsection
+{{--@section('title', 'Lire l\'article' . $article->title)--}}
 
 @section('content')
 <form action="{{url('articles/' . $article->id . '/edit')}}" method="POST" enctype="multipart/form-data">

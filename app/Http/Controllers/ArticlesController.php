@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ArticlesController extends Controller
 {
     public function index()
     {
         $articles = Article::all();
-        return view('articles.articles', compact('articles'));
+        return Inertia::render('layouts/Master', [
+            'articles'=> $articles
+        ]);
     }
 
     public function show($id)
@@ -24,15 +27,19 @@ class ArticlesController extends Controller
             }
         ])->findOrFail($id);
 
-        return view('articles.show', compact('article'));
+        return Inertia::render('articles.show', [
+            'article'=> $article
+        ]);
     }
 
     public function create() {
-        return view('articles.create');
+        $this->authorize('create', Article::class);
+        return Inertia::render('articles.show');
     }
 
     public function store(Request $request)
 {
+    $this->authorize('create', Article::class);
     $user = User::find(1);
     $request['user_id'] = $user->id;
 
@@ -52,15 +59,18 @@ class ArticlesController extends Controller
 }
 
 public function edit(Article $article) {
+    $this->authorize('update', $article);
     return view('articles.edit', compact('article'));
 }
 
 public function update(Request $request, Article $article){
+    $this->authorize('update', $article);
     $article->update($request->all());
    dd($article);
 }
 
 public function destroy(Article $article) {
+    $this->authorize('delete', $article);
     $article->delete();
 }
 }

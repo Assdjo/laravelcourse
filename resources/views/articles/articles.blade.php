@@ -1,10 +1,8 @@
 @extends('layouts.master')
 
-@section('title')
-    Articles
-@endsection
+{{--@section('title', 'Lire l\'article' . $article->title)--}}
 
-@section('article')
+@section('content')
     <h2>Articles</h2>
     @if ($articles)
         @foreach ($articles as $article)
