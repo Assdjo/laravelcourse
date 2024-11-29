@@ -10,7 +10,7 @@ trait Likeable
     return $this->morphMany(User::class,"likeable")->withTimestamps();
     }
 
-    public function like() {
+    public function like($user = null) {
         $user = $user? : auth()->user();
         return $this->likes()->attach($user);
     }
