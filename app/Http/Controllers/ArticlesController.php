@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ArticlesController extends Controller
 {
+
+    use AuthorizesRequests;
     public function index()
     {
         $articles = Article::with('user', 'tags')->get();
        
-        return Inertia::render('layouts/Master', [
+        return Inertia::render('Dashboard', [
             'articles'=> $articles
         ]);
     }
@@ -35,7 +38,7 @@ class ArticlesController extends Controller
 
     public function create() {
         $this->authorize('create', Article::class);
-        return Inertia::render('articles.show');
+        return Inertia::render('Dashboard');
     }
 
     public function store(Request $request)
@@ -80,3 +83,4 @@ public function destroy(Article $article) {
     $article->delete();
 }
 }
+

@@ -5,7 +5,8 @@ import { Link } from '@inertiajs/vue3';
 const props = defineProps({
     href: String,
     active: Boolean,
-});
+    functionclick : Function,
+}); 
 
 const classes = computed(() => {
     return props.active
@@ -15,7 +16,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
+    <Link :href="href" :class="classes" @click="functionclick">
         <slot />
     </Link>
 </template>

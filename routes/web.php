@@ -15,16 +15,17 @@ Route::get('/', function () {
 });
 
 Route::middleware([
-    'auth:sanctum',
+    'auth:sanctum', 'web',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard', [
-            'article'
-        ]);
-    })->name('dashboard');
+    Route::get('/dashboard', [ArticlesController::class,'index']
+    )->name('dashboard');
+    Route::get('/articles', [ArticlesController::class, 'index'])->name('articles');
+    Route::get('/create/article', [ArticlesController::class, 'create'])->name('create');
+    Route::post('/create/article', [ArticlesController::class, 'store']);
 });
 
 
-Route::get('/articles', [ArticlesController::class, 'index']);
+
+

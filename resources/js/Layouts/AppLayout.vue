@@ -7,10 +7,20 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import Welcome from '@/Components/Welcome.vue';
+import Master from '@/Pages/layouts/Master.vue';
+import Create from '@/Pages/articles/Create.vue';
 
 defineProps({
     title: String,
 });
+
+ const emit = defineEmits(['currentComponent'])
+
+
+ function newCurrent(currentComponent) {
+   return emit('currentComponent', currentComponent);
+ }
 
 const showingNavigationDropdown = ref(false);
 
@@ -40,17 +50,28 @@ const logout = () => {
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationMark class="block h-9 w-auto" />
-                                </Link>
-                            </div>
+                           
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')" @click="()=>{ newCurrent(Welcome)}" >
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('create')" :active="route().current('create')" @click="()=>{ newCurrent(Create)}" >
+                                    Créer un article
+                                </NavLink>
+                                <NavLink :href="route('articles')" :active="route().current('articles')" @click="()=>{ newCurrent(Master)}" >
+                                    Afficher tout les articles
+                                </NavLink>
+                                <NavLink href="/user/profile" :active="route().current('dashboard')" @click="()=>{ newCurrent(Master)}" >
+                                    Profil
+                                </NavLink>
+                               
+                               
+                                <!-- <button @click="()=>{ newCurrent(Create)}"></button> -->
+                            
+                             
+                               
                             </div>
                         </div>
 

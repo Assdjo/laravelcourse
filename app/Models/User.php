@@ -29,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'admin'
     ];
 
     /**
@@ -73,5 +74,9 @@ class User extends Authenticatable
     public function likedComments()
     {
         return $this->morphedByMany(Comment::class, 'likeable');
+    }
+
+    public function isAdmin() {
+        return $this->admin;
     }
 }
