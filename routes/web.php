@@ -24,6 +24,8 @@ Route::middleware([
     Route::get('/articles', [ArticlesController::class, 'index'])->name('articles');
     Route::get('/create/article', [ArticlesController::class, 'create'])->name('create');
     Route::post('/create/article', [ArticlesController::class, 'store']);
+    Route::post('/article/{article}/edit', [ArticlesController::class, 'edit'])->name('edit');
+    Route::post('/article/{article}', [ArticlesController::class, 'show'])->name('show');
 });
 
 
